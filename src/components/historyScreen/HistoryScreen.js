@@ -1,15 +1,53 @@
 import styled from "styled-components";
+import { useContext, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import UserContext from "../context/UserContext";
 
 export default function HistoryScreen() {
+	const { userInfo, controlHistory, setControlHistory } =
+		useContext(UserContext);
+	const [saveUserHistory, setSaveUserHistory] = useState([]);
+	const navigate = useNavigate();
+
+	let config = {
+		headers: {
+			email: userInfo.email,
+		},
+	};
+
+	if (controlHistory) {
+		axios
+			.get("http://localhost:5000/history", config)
+			.then((userHistory) => {
+				setControlHistory(false);
+				setSaveUserHistory(userHistory.data);
+			})
+			.catch((err) => {
+				alert(err);
+			});
+	}
+
+	function addInput() {
+		navigate("/newinput");
+	}
+
 	return (
 		<Box>
 			<TopBar>
-				<p>Olá, William</p>
+				<p>{`Olá, `}</p>
 				<ion-icon name="log-out-outline"></ion-icon>
 			</TopBar>
-			<HistoryContainer>Não há registros de entrada ou saída</HistoryContainer>
+			<HistoryContainer>
+				<ul>
+					{saveUserHistory.length
+						? "a"
+						: "Não há registros de entrada ou saída"}
+				</ul>
+			</HistoryContainer>
 			<BottomBar>
-				<ContainerBottom>
+				<ContainerBottom onClick={addInput}>
 					<ion-icon name="add-circle-outline"></ion-icon>
 					<p>Nova entrada</p>
 				</ContainerBottom>

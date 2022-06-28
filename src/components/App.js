@@ -7,12 +7,16 @@ import Login from "../components/loginScreen/Login";
 import SignupScreen from "./signupScreen/SignupScreen";
 import UserContext from "./context/UserContext";
 import HistoryScreen from "./historyScreen/HistoryScreen";
+import InputScreen from "./inputScreen/InputScreen";
 
 function App() {
 	const [userInfo, setUserInfo] = useState("");
+	const [controlHistory, setControlHistory] = useState(false);
 
 	return (
-		<UserContext.Provider value={{ setUserInfo, userInfo }}>
+		<UserContext.Provider
+			value={{ setUserInfo, userInfo, setControlHistory, controlHistory }}
+		>
 			<GlobalResetStyle />
 			<GlobalStyle />
 			<BrowserRouter>
@@ -20,6 +24,7 @@ function App() {
 					<Route path="/" element={<Login />} />
 					<Route path="/signup" element={<SignupScreen />} />
 					<Route path="/history" element={<HistoryScreen />} />
+					<Route path="/newinput" element={<InputScreen />} />
 				</Routes>
 			</BrowserRouter>
 		</UserContext.Provider>

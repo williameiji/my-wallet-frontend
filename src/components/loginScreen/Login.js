@@ -12,7 +12,7 @@ export default function InitialScreen() {
 		password: "",
 	});
 	const [blockInput, setBlockInput] = useState(false);
-	const { setUserInfo } = useContext(UserContext);
+	const { setUserInfo, setControlHistory } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	function handleFormChange(e) {
@@ -34,8 +34,9 @@ export default function InitialScreen() {
 		let promise = axios.post("http://localhost:5000/login", {}, config);
 		promise
 			.then((response) => {
-				setUserInfo({ ...loginDataInput });
+				setUserInfo({ email: loginDataInput.email });
 				navigate("/history");
+				setControlHistory(true);
 			})
 			.catch((err) => {
 				alert("Usuário/senha inválidos.");

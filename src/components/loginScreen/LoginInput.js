@@ -49,7 +49,6 @@ const Forms = styled.form`
 
 		::placeholder {
 			font-family: "Raleway", sans-serif;
-			padding: 0 0 0 10px;
 			font-size: 20px;
 			color: black;
 		}
