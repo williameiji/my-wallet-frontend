@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import LoginInput from "./LoginInput";
+import UserContext from "../context/UserContext";
 
 export default function InitialScreen() {
 	const [loginDataInput, setLoginDataInput] = useState({
@@ -11,7 +12,7 @@ export default function InitialScreen() {
 		password: "",
 	});
 	const [blockInput, setBlockInput] = useState(false);
-	//const [control, setControl] = useState(false);
+	const { setUserInfo } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	function handleFormChange(e) {
@@ -33,8 +34,8 @@ export default function InitialScreen() {
 		let promise = axios.post("http://localhost:5000/login", {}, config);
 		promise
 			.then((response) => {
-				//
-				navigate("rota");
+				setUserInfo({ ...loginDataInput });
+				navigate("/history");
 			})
 			.catch((err) => {
 				alert("Usuário/senha inválidos.");

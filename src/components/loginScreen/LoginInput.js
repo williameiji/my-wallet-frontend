@@ -45,6 +45,7 @@ const Forms = styled.form`
 		border: 1px solid #d5d5d5;
 		border-radius: 5px;
 		margin-top: 10px;
+		padding: 0 0 0 10px;
 
 		::placeholder {
 			font-family: "Raleway", sans-serif;
@@ -60,7 +61,7 @@ const Button = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 100%;
+
 	height: 45px;
 	margin-top: 10px;
 	background: #a328d6;
