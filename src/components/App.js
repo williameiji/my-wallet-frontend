@@ -9,6 +9,8 @@ import UserContext from "./context/UserContext";
 import HistoryScreen from "./historyScreen/HistoryScreen";
 import InputScreen from "./inputScreen/InputScreen";
 import OutputScreen from "./outputScreen/OutputScreen";
+import EditInputScreen from "./inputScreen/EditInputScreen";
+import EditOutputScreen from "./outputScreen/EditOutputScreen";
 
 function App() {
 	const [userInfo, setUserInfo] = useState("");
@@ -27,6 +29,14 @@ function App() {
 					<Route path="/history" element={<HistoryScreen />} />
 					<Route path="/newinput" element={<InputScreen />} />
 					<Route path="/newoutput" element={<OutputScreen />} />
+					<Route
+						path="/editinput/:idInformation"
+						element={<EditInputScreen />}
+					/>
+					<Route
+						path="/editoutput/:idInformation"
+						element={<EditOutputScreen />}
+					/>
 				</Routes>
 			</BrowserRouter>
 		</UserContext.Provider>

@@ -29,8 +29,6 @@ export default function HistoryScreen() {
 			});
 	}
 
-	console.log(saveUserHistory);
-
 	function deleteInfo(element) {
 		if (window.confirm("Deseja realmente excluir?")) {
 			axios
@@ -41,6 +39,14 @@ export default function HistoryScreen() {
 				.catch((err) => {
 					alert(err);
 				});
+		}
+	}
+
+	function editInformation(type, id) {
+		if (type === "input") {
+			navigate(`/editinput/${id}`);
+		} else {
+			navigate(`/editoutput/${id}`);
 		}
 	}
 
@@ -66,10 +72,14 @@ export default function HistoryScreen() {
 								<li key={index}>
 									<div>
 										<span>{history.date}</span>
-										<Description>{history.description}</Description>
+										<Description
+											onClick={() => editInformation(history.type, history._id)}
+										>
+											{history.description}
+										</Description>
 									</div>
 									<div>
-										<Value color={history.color}>{history.value}</Value>
+										<Value color={history.type}>{history.value}</Value>
 										<Delete onClick={() => deleteInfo(history._id)}>X</Delete>
 									</div>
 								</li>
@@ -228,7 +238,7 @@ const Description = styled.span`
 `;
 
 const Value = styled.span`
-	color: ${(props) => props.color};
+	color: ${(props) => (props.color === "input" ? "#03AC00" : "#C70000")};
 `;
 
 const Delete = styled.span`

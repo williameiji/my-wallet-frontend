@@ -33,7 +33,7 @@ export default function InputScreen() {
 				"http://localhost:5000/history",
 				{
 					...registerDataInput,
-					color: "#03AC00",
+					type: "input",
 				},
 				config
 			)

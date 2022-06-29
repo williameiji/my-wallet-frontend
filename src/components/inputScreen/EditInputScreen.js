@@ -1,22 +1,23 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
 
-export default function OutputScreen() {
-	const [registerDataOutput, setRegisterDataOutput] = useState({
+export default function EditInputScreen() {
+	const [editDataInput, setEditDataInput] = useState({
 		value: "",
 		description: "",
 	});
 	const { setControlHistory, userInfo } = useContext(UserContext);
+	const { idInformation } = useParams();
 	const navigate = useNavigate();
 
 	function handleFormChange(e) {
-		let inputData = { ...registerDataOutput };
+		let inputData = { ...editDataInput };
 		inputData[e.target.name] = e.target.value;
-		setRegisterDataOutput(inputData);
+		setEditDataInput(inputData);
 	}
 
 	let config = {
@@ -25,16 +26,14 @@ export default function OutputScreen() {
 		},
 	};
 
-	function registerOutput(e) {
+	function editInput(e) {
 		e.preventDefault();
 
 		axios
-			.post(
-				"http://localhost:5000/history",
+			.put(
+				`http://localhost:5000/history/${idInformation}`,
 				{
-					...registerDataOutput,
-					value: `-${registerDataOutput.value}`,
-					type: "output",
+					...editDataInput,
 				},
 				config
 			)
@@ -47,14 +46,14 @@ export default function OutputScreen() {
 
 	return (
 		<Box>
-			<Title>Nova saída</Title>
-			<Forms onSubmit={registerOutput}>
+			<Title>Editar entrada</Title>
+			<Forms onSubmit={editInput}>
 				<input
 					type="text"
 					name="value"
 					placeholder="Valor"
 					onChange={(e) => handleFormChange(e)}
-					value={registerDataOutput.value}
+					value={editDataInput.value}
 					required
 				/>
 				<input
@@ -62,10 +61,10 @@ export default function OutputScreen() {
 					name="description"
 					placeholder="Descrição"
 					onChange={(e) => handleFormChange(e)}
-					value={registerDataOutput.description}
+					value={editDataInput.description}
 					required
 				/>
-				<Button type="submit">Salvar saída</Button>
+				<Button type="submit">Atualizar entrada</Button>
 			</Forms>
 		</Box>
 	);
