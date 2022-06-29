@@ -42,7 +42,9 @@ export default function EditOutputScreen() {
 				setControlHistory(true);
 				navigate("/history");
 			})
-			.catch((err) => {});
+			.catch((err) => {
+				alert(err.response.data);
+			});
 	}
 
 	return (

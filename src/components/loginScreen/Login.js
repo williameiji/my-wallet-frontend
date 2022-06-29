@@ -39,7 +39,7 @@ export default function InitialScreen() {
 				setControlHistory(true);
 			})
 			.catch((err) => {
-				alert("Usuário/senha inválidos.");
+				alert(err.response.data);
 				setBlockInput(false);
 			});
 	}

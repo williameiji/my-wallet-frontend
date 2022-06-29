@@ -37,11 +37,13 @@ export default function InputScreen() {
 				},
 				config
 			)
-			.then((response) => {
+			.then(() => {
 				setControlHistory(true);
 				navigate("/history");
 			})
-			.catch((err) => {});
+			.catch((err) => {
+				alert(err.response.data);
+			});
 	}
 
 	return (

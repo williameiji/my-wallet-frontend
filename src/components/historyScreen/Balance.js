@@ -28,7 +28,7 @@ const Box = styled.div`
 	justify-content: space-between;
 	background-color: white;
 	margin-bottom: 15px;
-	border-radius: 0 0 5px 5px;
+	border-radius: 5px;
 
 	p:first-child {
 		font-weight: bold;

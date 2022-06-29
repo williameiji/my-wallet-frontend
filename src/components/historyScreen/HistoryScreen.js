@@ -28,7 +28,7 @@ export default function HistoryScreen() {
 				setSaveUserHistory(userHistory.data);
 			})
 			.catch((err) => {
-				alert(err);
+				alert(err.response.data);
 			});
 	}
 
@@ -72,18 +72,16 @@ export default function HistoryScreen() {
 				<ion-icon name="log-out-outline" onClick={exitApp}></ion-icon>
 			</TopBar>
 			{saveUserHistory.length ? (
-				<>
+				<BoxContainer>
 					<HistoryContainer>
-						<div>
-							<List
-								saveUserHistory={saveUserHistory}
-								deleteInfo={deleteInfo}
-								editInformation={editInformation}
-							/>
-						</div>
+						<List
+							saveUserHistory={saveUserHistory}
+							deleteInfo={deleteInfo}
+							editInformation={editInformation}
+						/>
 					</HistoryContainer>
 					<Balance saveUserHistory={saveUserHistory} />
-				</>
+				</BoxContainer>
 			) : (
 				<ContainerText>
 					<Text>Não há registros de entrada ou saída</Text>
@@ -128,10 +126,9 @@ const HistoryContainer = styled.div`
 	height: 63vh;
 	overflow: auto;
 	background-color: white;
-	border-radius: 5px 5px 0 0;
-	padding: 0 10px 0 10px;
+	padding: 5px 10px 0 10px;
 	color: #868686;
-	border-bottom-style: none;
+	border-radius: 5px;
 `;
 
 const ContainerText = styled.div`
@@ -151,4 +148,9 @@ const ContainerText = styled.div`
 const Text = styled.p`
 	font-size: 16px;
 	margin: 0 auto;
+`;
+
+const BoxContainer = styled.div`
+	border-radius: 5px;
+	background-color: white;
 `;

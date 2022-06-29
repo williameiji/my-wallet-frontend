@@ -35,8 +35,6 @@ export default function SignupScreen() {
 				alert(err.response.data);
 				setBlockInput(false);
 			});
-
-		//
 	}
 
 	return (
