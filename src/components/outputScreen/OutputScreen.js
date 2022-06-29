@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
 
-export default function InputScreen() {
+export default function OutputScreen() {
 	const [registerDataInput, setRegisterDataInput] = useState({
 		value: "",
 		description: "",
@@ -25,7 +25,7 @@ export default function InputScreen() {
 		},
 	};
 
-	function registerInput(e) {
+	function registerOutput(e) {
 		e.preventDefault();
 
 		axios
@@ -33,7 +33,8 @@ export default function InputScreen() {
 				"http://localhost:5000/history",
 				{
 					...registerDataInput,
-					color: "#03AC00",
+					value: `-${registerDataInput.value}`,
+					color: "#C70000",
 				},
 				config
 			)
@@ -47,7 +48,7 @@ export default function InputScreen() {
 	return (
 		<Box>
 			<Title>Nova entrada</Title>
-			<Forms onSubmit={registerInput}>
+			<Forms onSubmit={registerOutput}>
 				<input
 					type="text"
 					name="value"
@@ -64,7 +65,7 @@ export default function InputScreen() {
 					value={registerDataInput.description}
 					required
 				/>
-				<Button type="submit">Salvar entrada</Button>
+				<Button type="submit">Salvar saída</Button>
 			</Forms>
 		</Box>
 	);

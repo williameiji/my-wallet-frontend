@@ -31,10 +31,10 @@ export default function InitialScreen() {
 		e.preventDefault();
 		setBlockInput(true);
 
-		let promise = axios.post("http://localhost:5000/login", {}, config);
-		promise
+		axios
+			.post("http://localhost:5000/login", {}, config)
 			.then((response) => {
-				setUserInfo({ email: loginDataInput.email });
+				setUserInfo(response.data);
 				navigate("/history");
 				setControlHistory(true);
 			})

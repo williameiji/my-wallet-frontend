@@ -25,21 +25,16 @@ export default function SignupScreen() {
 		e.preventDefault();
 		setBlockInput(true);
 
-		if (SingupDataInput.password === SingupDataInput.isPasswordEqual) {
-			let promise = axios.post("http://localhost:5000/signup", SingupDataInput);
-			promise
-				.then(() => {
-					navigate("/");
-					alert("Cadastro efetuado com sucesso!");
-				})
-				.catch((err) => {
-					alert("Usuário já existe!");
-					setBlockInput(false);
-				});
-		} else {
-			setBlockInput(false);
-			alert("Senhas devem ser iguais!");
-		}
+		let promise = axios.post("http://localhost:5000/signup", SingupDataInput);
+		promise
+			.then(() => {
+				navigate("/");
+				alert("Cadastro efetuado com sucesso!");
+			})
+			.catch((err) => {
+				alert(err.response.data);
+				setBlockInput(false);
+			});
 
 		//
 	}

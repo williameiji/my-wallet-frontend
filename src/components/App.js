@@ -8,6 +8,7 @@ import SignupScreen from "./signupScreen/SignupScreen";
 import UserContext from "./context/UserContext";
 import HistoryScreen from "./historyScreen/HistoryScreen";
 import InputScreen from "./inputScreen/InputScreen";
+import OutputScreen from "./outputScreen/OutputScreen";
 
 function App() {
 	const [userInfo, setUserInfo] = useState("");
@@ -25,6 +26,7 @@ function App() {
 					<Route path="/signup" element={<SignupScreen />} />
 					<Route path="/history" element={<HistoryScreen />} />
 					<Route path="/newinput" element={<InputScreen />} />
+					<Route path="/newoutput" element={<OutputScreen />} />
 				</Routes>
 			</BrowserRouter>
 		</UserContext.Provider>

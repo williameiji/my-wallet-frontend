@@ -9,11 +9,12 @@ export default function HistoryScreen() {
 	const { userInfo, controlHistory, setControlHistory } =
 		useContext(UserContext);
 	const [saveUserHistory, setSaveUserHistory] = useState([]);
+	const [saveUser, setSaveUser] = useState([]);
 	const navigate = useNavigate();
 
 	let config = {
 		headers: {
-			email: userInfo.email,
+			Authorization: `Bearer ${userInfo}`,
 		},
 	};
 
@@ -29,29 +30,72 @@ export default function HistoryScreen() {
 			});
 	}
 
+	if (controlHistory) {
+		axios
+			.get("http://localhost:5000/user", config)
+			.then((response) => {
+				setSaveUser(response.data);
+			})
+			.catch((err) => {
+				alert(err);
+			});
+	}
+
 	function addInput() {
 		navigate("/newinput");
+	}
+
+	function addOutput() {
+		navigate("/newoutput");
 	}
 
 	return (
 		<Box>
 			<TopBar>
-				<p>{`Olá, `}</p>
+				<p>{`Olá, ${saveUser}`}</p>
 				<ion-icon name="log-out-outline"></ion-icon>
 			</TopBar>
 			<HistoryContainer>
-				<ul>
-					{saveUserHistory.length
-						? "a"
-						: "Não há registros de entrada ou saída"}
-				</ul>
+				{saveUserHistory.length ? (
+					<>
+						<List>
+							{saveUserHistory.map((history, index) => (
+								<li key={index}>
+									<div>
+										<span>{history.date}</span>
+										<Description>{history.description}</Description>
+									</div>
+									<Value color={history.color}>{history.value}</Value>
+								</li>
+							))}
+						</List>
+						<Balance>
+							<p>SALDO</p>
+							<TotalBalance
+								color={saveUserHistory
+									.map((item) => Number(item.value))
+									.reduce(function (acumulador, valorAtual) {
+										return acumulador + valorAtual;
+									})}
+							>
+								{saveUserHistory
+									.map((item) => Number(item.value))
+									.reduce(function (acumulador, valorAtual) {
+										return acumulador + valorAtual;
+									})}
+							</TotalBalance>
+						</Balance>
+					</>
+				) : (
+					<Text>Não há registros de entrada ou saída</Text>
+				)}
 			</HistoryContainer>
 			<BottomBar>
 				<ContainerBottom onClick={addInput}>
 					<ion-icon name="add-circle-outline"></ion-icon>
 					<p>Nova entrada</p>
 				</ContainerBottom>
-				<ContainerBottom>
+				<ContainerBottom onClick={addOutput}>
 					<ion-icon name="remove-circle-outline"></ion-icon>
 					<p>Nova saída</p>
 				</ContainerBottom>
@@ -87,14 +131,15 @@ const TopBar = styled.div`
 `;
 
 const HistoryContainer = styled.div`
+	position: relative;
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	flex-direction: column;
 	width: 100%;
 	height: 65vh;
 	background-color: white;
 	border-radius: 5px;
 	margin: 0 0 15px 0;
+	padding: 10px;
 	color: #868686;
 `;
 
@@ -134,4 +179,48 @@ const ContainerBottom = styled.div`
 		font-size: 26px;
 		color: white;
 	}
+`;
+
+const Text = styled.p`
+	font-size: 16px;
+	margin: 0 auto;
+`;
+
+const List = styled.ul`
+	display: flex;
+	flex-direction: column;
+	font-size: 20px;
+
+	li {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		margin-top: 5px;
+	}
+`;
+
+const Balance = styled.div`
+	display: flex;
+	position: absolute;
+	bottom: 10px;
+	width: 83vw;
+	justify-content: space-between;
+
+	p {
+		font-size: 20px;
+	}
+`;
+
+const TotalBalance = styled.p`
+	color: ${(props) => (props.color > 0 ? "#03AC00" : "#C70000")};
+`;
+
+const Description = styled.span`
+	color: black;
+	margin-left: 15px;
+`;
+
+const Value = styled.span`
+	color: ${(props) => props.color};
 `;
