@@ -21,7 +21,7 @@ export default function InputScreen() {
 
 	let config = {
 		headers: {
-			Authorization: `Bearer ${userInfo}`,
+			Authorization: `Bearer ${userInfo.token}`,
 		},
 	};
 

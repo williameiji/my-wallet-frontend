@@ -9,12 +9,11 @@ export default function HistoryScreen() {
 	const { userInfo, controlHistory, setControlHistory } =
 		useContext(UserContext);
 	const [saveUserHistory, setSaveUserHistory] = useState([]);
-	const [saveUser, setSaveUser] = useState([]);
 	const navigate = useNavigate();
 
 	let config = {
 		headers: {
-			Authorization: `Bearer ${userInfo}`,
+			Authorization: `Bearer ${userInfo.token}`,
 		},
 	};
 
@@ -30,15 +29,19 @@ export default function HistoryScreen() {
 			});
 	}
 
-	if (controlHistory) {
-		axios
-			.get("http://localhost:5000/user", config)
-			.then((response) => {
-				setSaveUser(response.data);
-			})
-			.catch((err) => {
-				alert(err);
-			});
+	console.log(saveUserHistory);
+
+	function deleteInfo(element) {
+		if (window.confirm("Deseja realmente excluir?")) {
+			axios
+				.delete(`http://localhost:5000/history/${element}`, config)
+				.then(() => {
+					setControlHistory(true);
+				})
+				.catch((err) => {
+					alert(err);
+				});
+		}
 	}
 
 	function addInput() {
@@ -52,7 +55,7 @@ export default function HistoryScreen() {
 	return (
 		<Box>
 			<TopBar>
-				<p>{`Olá, ${saveUser}`}</p>
+				<p>{`Olá, ${userInfo.name}`}</p>
 				<ion-icon name="log-out-outline"></ion-icon>
 			</TopBar>
 			<HistoryContainer>
@@ -65,7 +68,10 @@ export default function HistoryScreen() {
 										<span>{history.date}</span>
 										<Description>{history.description}</Description>
 									</div>
-									<Value color={history.color}>{history.value}</Value>
+									<div>
+										<Value color={history.color}>{history.value}</Value>
+										<Delete onClick={() => deleteInfo(history._id)}>X</Delete>
+									</div>
 								</li>
 							))}
 						</List>
@@ -223,4 +229,10 @@ const Description = styled.span`
 
 const Value = styled.span`
 	color: ${(props) => props.color};
+`;
+
+const Delete = styled.span`
+	font-size: 16px;
+	color: #c6c6c6;
+	margin-left: 5px;
 `;
