@@ -4,10 +4,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
+import url from "../services/api";
 
 export default function OutputScreen() {
 	const [registerDataOutput, setRegisterDataOutput] = useState({
-		value: "",
+		value: 0,
 		description: "",
 	});
 	const { setControlHistory, userInfo } = useContext(UserContext);
@@ -30,10 +31,10 @@ export default function OutputScreen() {
 
 		axios
 			.post(
-				"http://localhost:5000/history",
+				url.history,
 				{
 					...registerDataOutput,
-					value: `-${registerDataOutput.value}`,
+					value: registerDataOutput.value.toFixed(2),
 					type: "output",
 				},
 				config
@@ -52,7 +53,7 @@ export default function OutputScreen() {
 			<Title>Nova saída</Title>
 			<Forms onSubmit={registerOutput}>
 				<input
-					type="text"
+					type="number"
 					name="value"
 					placeholder="Valor"
 					onChange={(e) => handleFormChange(e)}
@@ -91,7 +92,8 @@ const Forms = styled.form`
 	display: flex;
 	flex-direction: column;
 
-	input[type="text"] {
+	input[type="text"],
+	input[type="number"] {
 		width: 100%;
 		height: 55px;
 		background-color: #ffffff;

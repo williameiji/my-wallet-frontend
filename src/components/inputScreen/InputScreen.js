@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
+import url from "../services/api";
 
 export default function InputScreen() {
 	const [registerDataInput, setRegisterDataInput] = useState({
@@ -28,11 +29,14 @@ export default function InputScreen() {
 	function registerInput(e) {
 		e.preventDefault();
 
+		let newValue = registerDataInput.value;
+
 		axios
 			.post(
-				"http://localhost:5000/history",
+				url.history,
 				{
 					...registerDataInput,
+					value: newValue,
 					type: "input",
 				},
 				config
@@ -51,9 +55,10 @@ export default function InputScreen() {
 			<Title>Nova entrada</Title>
 			<Forms onSubmit={registerInput}>
 				<input
-					type="text"
+					type="number"
 					name="value"
 					placeholder="Valor"
+					step=".01"
 					onChange={(e) => handleFormChange(e)}
 					value={registerDataInput.value}
 					required
@@ -90,7 +95,8 @@ const Forms = styled.form`
 	display: flex;
 	flex-direction: column;
 
-	input[type="text"] {
+	input[type="text"],
+	input[type="number"] {
 		width: 100%;
 		height: 55px;
 		background-color: #ffffff;

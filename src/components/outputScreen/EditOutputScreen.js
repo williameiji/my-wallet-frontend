@@ -4,10 +4,11 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
+import url from "../services/api";
 
 export default function EditOutputScreen() {
 	const [editDataOutput, setEditDataOutput] = useState({
-		value: "",
+		value: 0,
 		description: "",
 	});
 	const { setControlHistory, userInfo } = useContext(UserContext);
@@ -31,10 +32,10 @@ export default function EditOutputScreen() {
 
 		axios
 			.put(
-				`http://localhost:5000/history/${idInformation}`,
+				`${url.history}/${idInformation}`,
 				{
 					...editDataOutput,
-					value: `-${editDataOutput.value}`,
+					value: editDataOutput.value.toFixed(2),
 				},
 				config
 			)
@@ -52,7 +53,7 @@ export default function EditOutputScreen() {
 			<Title>Editar saída</Title>
 			<Forms onSubmit={registerOutput}>
 				<input
-					type="text"
+					type="number"
 					name="value"
 					placeholder="Valor"
 					onChange={(e) => handleFormChange(e)}
@@ -91,7 +92,8 @@ const Forms = styled.form`
 	display: flex;
 	flex-direction: column;
 
-	input[type="text"] {
+	input[type="text"],
+	input[type="number"] {
 		width: 100%;
 		height: 55px;
 		background-color: #ffffff;

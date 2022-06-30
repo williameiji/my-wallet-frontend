@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import SingupInput from "./SignupInput";
+import url from "../services/api";
 
 export default function SignupScreen() {
 	const [SingupDataInput, setSingupDataInput] = useState({
@@ -25,7 +26,7 @@ export default function SignupScreen() {
 		e.preventDefault();
 		setBlockInput(true);
 
-		let promise = axios.post("http://localhost:5000/signup", SingupDataInput);
+		let promise = axios.post(url.signup, SingupDataInput);
 		promise
 			.then(() => {
 				navigate("/");

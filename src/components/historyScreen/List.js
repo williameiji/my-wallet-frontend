@@ -14,7 +14,9 @@ export default function List({ saveUserHistory, deleteInfo, editInformation }) {
 						</Description>
 					</div>
 					<div>
-						<Value color={history.type}>{history.value}</Value>
+						<Value color={history.type}>
+							{parseFloat(history.value).toFixed(2).replace(".", ",")}
+						</Value>
 						<Delete onClick={() => deleteInfo(history._id)}>X</Delete>
 					</div>
 				</li>

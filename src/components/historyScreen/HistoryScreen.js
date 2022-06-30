@@ -7,9 +7,10 @@ import UserContext from "../context/UserContext";
 import BottomBar from "./BottomBar";
 import Balance from "./Balance";
 import List from "./List";
+import url from "../services/api";
 
 export default function HistoryScreen() {
-	const { userInfo, controlHistory, setControlHistory } =
+	const { userInfo, controlHistory, setControlHistory, setUserInfo } =
 		useContext(UserContext);
 	const [saveUserHistory, setSaveUserHistory] = useState([]);
 	const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function HistoryScreen() {
 
 	if (controlHistory) {
 		axios
-			.get("http://localhost:5000/history", config)
+			.get(url.history, config)
 			.then((userHistory) => {
 				setControlHistory(false);
 				setSaveUserHistory(userHistory.data);
@@ -33,13 +34,14 @@ export default function HistoryScreen() {
 	}
 
 	function exitApp() {
+		setUserInfo("");
 		navigate("/");
 	}
 
 	function deleteInfo(element) {
 		if (window.confirm("Deseja realmente excluir?")) {
 			axios
-				.delete(`http://localhost:5000/history/${element}`, config)
+				.delete(`${url.history}/${element}`, config)
 				.then(() => {
 					setControlHistory(true);
 				})

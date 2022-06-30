@@ -5,6 +5,7 @@ import axios from "axios";
 
 import LoginInput from "./LoginInput";
 import UserContext from "../context/UserContext";
+import url from "../services/api";
 
 export default function InitialScreen() {
 	const [loginDataInput, setLoginDataInput] = useState({
@@ -32,7 +33,7 @@ export default function InitialScreen() {
 		setBlockInput(true);
 
 		axios
-			.post("http://localhost:5000/login", {}, config)
+			.post(url.login, {}, config)
 			.then((response) => {
 				setUserInfo(response.data);
 				navigate("/history");

@@ -1,21 +1,17 @@
 import styled from "styled-components";
 
 export default function Balance({ saveUserHistory }) {
+	const balance = saveUserHistory
+		.map((item) => Number(item.value))
+		.reduce(function (acumulador, valorAtual) {
+			return acumulador + valorAtual;
+		});
+
 	return (
 		<Box>
 			<p>SALDO</p>
-			<TotalBalance
-				color={saveUserHistory
-					.map((item) => Number(item.value))
-					.reduce(function (acumulador, valorAtual) {
-						return acumulador + valorAtual;
-					})}
-			>
-				{saveUserHistory
-					.map((item) => Number(item.value))
-					.reduce(function (acumulador, valorAtual) {
-						return acumulador + valorAtual;
-					})}
+			<TotalBalance color={balance}>
+				{balance.toFixed(2).replace(".", ",")}
 			</TotalBalance>
 		</Box>
 	);
