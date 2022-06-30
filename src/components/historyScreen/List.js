@@ -15,7 +15,7 @@ export default function List({ saveUserHistory, deleteInfo, editInformation }) {
 					</div>
 					<div>
 						<Value color={history.type}>
-							{parseFloat(history.value).toFixed(2).replace(".", ",")}
+							<p>{parseFloat(history.value).toFixed(2).replace(".", ",")}</p>
 						</Value>
 						<Delete onClick={() => deleteInfo(history._id)}>X</Delete>
 					</div>
@@ -37,7 +37,7 @@ const Box = styled.ul`
 		width: 100%;
 		margin-bottom: 8px;
 
-		div:first-child {
+		div {
 			display: flex;
 		}
 	}
@@ -47,7 +47,7 @@ const Description = styled.div`
 	display: flex;
 	color: black;
 	margin-left: 15px;
-	width: 150px;
+	width: 120px;
 
 	p {
 		overflow: hidden;
@@ -56,11 +56,23 @@ const Description = styled.div`
 	}
 `;
 
-const Value = styled.span`
+const Value = styled.div`
+	display: flex;
+	justify-content: end;
 	color: ${(props) => (props.color === "input" ? "#03AC00" : "#C70000")};
+	width: 100px;
+
+	p {
+		text-align: right;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
 `;
 
 const Delete = styled.span`
+	display: flex;
+	align-items: center;
 	font-size: 16px;
 	color: #c6c6c6;
 	margin-left: 5px;

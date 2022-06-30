@@ -8,7 +8,7 @@ import url from "../services/api";
 
 export default function OutputScreen() {
 	const [registerDataOutput, setRegisterDataOutput] = useState({
-		value: 0,
+		value: "",
 		description: "",
 	});
 	const { setControlHistory, userInfo } = useContext(UserContext);
@@ -34,7 +34,7 @@ export default function OutputScreen() {
 				url.history,
 				{
 					...registerDataOutput,
-					value: registerDataOutput.value.toFixed(2),
+					value: `-${registerDataOutput.value}`,
 					type: "output",
 				},
 				config

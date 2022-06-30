@@ -29,14 +29,11 @@ export default function InputScreen() {
 	function registerInput(e) {
 		e.preventDefault();
 
-		let newValue = registerDataInput.value;
-
 		axios
 			.post(
 				url.history,
 				{
 					...registerDataInput,
-					value: newValue,
 					type: "input",
 				},
 				config

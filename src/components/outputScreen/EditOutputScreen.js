@@ -8,7 +8,7 @@ import url from "../services/api";
 
 export default function EditOutputScreen() {
 	const [editDataOutput, setEditDataOutput] = useState({
-		value: 0,
+		value: "",
 		description: "",
 	});
 	const { setControlHistory, userInfo } = useContext(UserContext);
@@ -35,7 +35,7 @@ export default function EditOutputScreen() {
 				`${url.history}/${idInformation}`,
 				{
 					...editDataOutput,
-					value: editDataOutput.value.toFixed(2),
+					value: `-${editDataOutput.value}`,
 				},
 				config
 			)
