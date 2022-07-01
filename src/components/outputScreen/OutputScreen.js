@@ -56,6 +56,7 @@ export default function OutputScreen() {
 					type="number"
 					name="value"
 					placeholder="Valor"
+					step=".01"
 					onChange={(e) => handleFormChange(e)}
 					value={registerDataOutput.value}
 					required

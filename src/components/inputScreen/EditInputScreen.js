@@ -55,6 +55,7 @@ export default function EditInputScreen() {
 					type="number"
 					name="value"
 					placeholder="Valor"
+					step=".01"
 					onChange={(e) => handleFormChange(e)}
 					value={editDataInput.value}
 					required
