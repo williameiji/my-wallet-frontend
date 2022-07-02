@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Loading from "../../assets/loading/Loading";
 
 export default function LoginInput({
 	loginDataInput,
@@ -25,7 +26,7 @@ export default function LoginInput({
 				required
 			/>
 			<Button blockInput={blockInput} type="submit">
-				Entrar
+				{blockInput ? <Loading /> : "Entrar"}
 			</Button>
 		</Forms>
 	);

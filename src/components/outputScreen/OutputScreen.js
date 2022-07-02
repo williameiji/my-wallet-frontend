@@ -64,6 +64,7 @@ export default function OutputScreen() {
 					value={registerDataOutput.value}
 					required
 				/>
+				<p>Ex: 10.48</p>
 				<input
 					type="text"
 					name="description"
@@ -86,8 +87,8 @@ const Box = styled.div`
 	padding: 25px;
 
 	p {
-		margin: 25px 0 0 0;
-		font-size: 14px;
+		margin: 5px 0 0 0;
+		font-size: 15px;
 		color: white;
 	}
 `;
