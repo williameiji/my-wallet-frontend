@@ -40,7 +40,7 @@ export default function InitialScreen() {
 				setControlHistory(true);
 			})
 			.catch((err) => {
-				alert(err.response.data);
+				alert(err);
 				setBlockInput(false);
 			});
 	}

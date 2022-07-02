@@ -45,6 +45,9 @@ export default function EditOutputScreen() {
 			})
 			.catch((err) => {
 				alert(err.response.data);
+				if (err.response.status === 401) {
+					navigate("/");
+				}
 			});
 	}
 

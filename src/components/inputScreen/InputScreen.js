@@ -44,6 +44,9 @@ export default function InputScreen() {
 			})
 			.catch((err) => {
 				alert(err.response.data);
+				if (err.response.status === 401) {
+					navigate("/");
+				}
 			});
 	}
 

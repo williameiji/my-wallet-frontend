@@ -47,6 +47,9 @@ export default function HistoryScreen() {
 				})
 				.catch((err) => {
 					alert(err);
+					if (err.response.status === 401) {
+						navigate("/");
+					}
 				});
 		}
 	}
