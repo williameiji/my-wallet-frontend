@@ -15,10 +15,18 @@ import EditOutputScreen from "./outputScreen/EditOutputScreen";
 function App() {
 	const [userInfo, setUserInfo] = useState("");
 	const [controlHistory, setControlHistory] = useState(false);
+	const [blockInput, setBlockInput] = useState(false);
 
 	return (
 		<UserContext.Provider
-			value={{ setUserInfo, userInfo, setControlHistory, controlHistory }}
+			value={{
+				setUserInfo,
+				userInfo,
+				setControlHistory,
+				controlHistory,
+				blockInput,
+				setBlockInput,
+			}}
 		>
 			<GlobalResetStyle />
 			<GlobalStyle />

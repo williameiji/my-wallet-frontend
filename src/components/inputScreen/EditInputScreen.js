@@ -5,13 +5,15 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
 import url from "../services/api";
+import Loading from "../../assets/loading/Loading";
 
 export default function EditInputScreen() {
 	const [editDataInput, setEditDataInput] = useState({
 		value: "",
 		description: "",
 	});
-	const { setControlHistory, userInfo } = useContext(UserContext);
+	const { setControlHistory, userInfo, setBlockInput, blockInput } =
+		useContext(UserContext);
 	const { idInformation } = useParams();
 	const navigate = useNavigate();
 
@@ -29,6 +31,7 @@ export default function EditInputScreen() {
 
 	function editInput(e) {
 		e.preventDefault();
+		setBlockInput(true);
 
 		axios
 			.put(
@@ -41,12 +44,14 @@ export default function EditInputScreen() {
 			.then(() => {
 				setControlHistory(true);
 				navigate("/history");
+				setBlockInput(false);
 			})
 			.catch((err) => {
 				alert(err.response.data);
 				if (err.response.status === 401) {
 					navigate("/");
 				}
+				setBlockInput(false);
 			});
 	}
 
@@ -59,8 +64,7 @@ export default function EditInputScreen() {
 					name="value"
 					placeholder="Valor"
 					inputMode="numeric"
-					step=".01"
-					pattern="[0-9]+\.[0-9]2|[0-9]+"
+					pattern="[0-9]+.[0-9]{2}|[0-9]"
 					onChange={(e) => handleFormChange(e)}
 					value={editDataInput.value}
 					required
@@ -74,7 +78,9 @@ export default function EditInputScreen() {
 					value={editDataInput.description}
 					required
 				/>
-				<Button type="submit">Atualizar entrada</Button>
+				<Button type="submit">
+					{blockInput ? <Loading /> : "Atualizar entrada"}
+				</Button>
 			</Forms>
 		</Box>
 	);

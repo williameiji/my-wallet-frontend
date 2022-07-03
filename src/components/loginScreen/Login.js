@@ -12,8 +12,8 @@ export default function InitialScreen() {
 		email: "",
 		password: "",
 	});
-	const [blockInput, setBlockInput] = useState(false);
-	const { setUserInfo, setControlHistory } = useContext(UserContext);
+	const { setUserInfo, setControlHistory, setBlockInput, blockInput } =
+		useContext(UserContext);
 	const navigate = useNavigate();
 
 	function handleFormChange(e) {
@@ -38,6 +38,7 @@ export default function InitialScreen() {
 				setUserInfo(response.data);
 				navigate("/history");
 				setControlHistory(true);
+				setBlockInput(false);
 			})
 			.catch((err) => {
 				alert(err);

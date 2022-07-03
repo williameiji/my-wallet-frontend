@@ -5,13 +5,15 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
 import url from "../services/api";
+import Loading from "../../assets/loading/Loading";
 
 export default function EditOutputScreen() {
 	const [editDataOutput, setEditDataOutput] = useState({
 		value: "",
 		description: "",
 	});
-	const { setControlHistory, userInfo } = useContext(UserContext);
+	const { setControlHistory, userInfo, setBlockInput, blockInput } =
+		useContext(UserContext);
 	const { idInformation } = useParams();
 	const navigate = useNavigate();
 
@@ -29,6 +31,7 @@ export default function EditOutputScreen() {
 
 	function registerOutput(e) {
 		e.preventDefault();
+		setBlockInput(true);
 
 		axios
 			.put(
@@ -42,12 +45,14 @@ export default function EditOutputScreen() {
 			.then(() => {
 				setControlHistory(true);
 				navigate("/history");
+				setBlockInput(false);
 			})
 			.catch((err) => {
 				alert(err.response.data);
 				if (err.response.status === 401) {
 					navigate("/");
 				}
+				setBlockInput(false);
 			});
 	}
 
@@ -61,7 +66,7 @@ export default function EditOutputScreen() {
 					placeholder="Valor"
 					inputMode="numeric"
 					step=".01"
-					pattern="[0-9]+\.[0-9]2|[0-9]+"
+					pattern="[0-9]+.[0-9]{2}|[0-9]"
 					onChange={(e) => handleFormChange(e)}
 					value={editDataOutput.value}
 					required
@@ -75,7 +80,9 @@ export default function EditOutputScreen() {
 					value={editDataOutput.description}
 					required
 				/>
-				<Button type="submit">Atualizar saída</Button>
+				<Button type="submit">
+					{blockInput ? <Loading /> : "Atualizar saída"}
+				</Button>
 			</Forms>
 		</Box>
 	);

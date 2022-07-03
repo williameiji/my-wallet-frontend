@@ -5,13 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 import UserContext from "../context/UserContext";
 import url from "../services/api";
+import Loading from "../../assets/loading/Loading";
 
 export default function OutputScreen() {
 	const [registerDataOutput, setRegisterDataOutput] = useState({
 		value: "",
 		description: "",
 	});
-	const { setControlHistory, userInfo } = useContext(UserContext);
+	const { setControlHistory, userInfo, setBlockInput, blockInput } =
+		useContext(UserContext);
 	const navigate = useNavigate();
 
 	function handleFormChange(e) {
@@ -28,6 +30,7 @@ export default function OutputScreen() {
 
 	function registerOutput(e) {
 		e.preventDefault();
+		setBlockInput(true);
 
 		axios
 			.post(
@@ -42,12 +45,14 @@ export default function OutputScreen() {
 			.then(() => {
 				setControlHistory(true);
 				navigate("/history");
+				setBlockInput(false);
 			})
 			.catch((err) => {
 				alert(err.response.data);
 				if (err.response.status === 401) {
 					navigate("/");
 				}
+				setBlockInput(false);
 			});
 	}
 
@@ -61,7 +66,7 @@ export default function OutputScreen() {
 					placeholder="Valor"
 					inputMode="numeric"
 					step=".01"
-					pattern="[0-9]+\.[0-9]2|[0-9]+"
+					pattern="[0-9]+.[0-9]{2}|[0-9]"
 					onChange={(e) => handleFormChange(e)}
 					value={registerDataOutput.value}
 					required
@@ -75,7 +80,9 @@ export default function OutputScreen() {
 					value={registerDataOutput.description}
 					required
 				/>
-				<Button type="submit">Salvar saída</Button>
+				<Button type="submit">
+					{blockInput ? <Loading /> : "Salvar saída"}
+				</Button>
 			</Forms>
 		</Box>
 	);
