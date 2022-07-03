@@ -55,15 +55,17 @@ export default function InputScreen() {
 			<Title>Nova entrada</Title>
 			<Forms onSubmit={registerInput}>
 				<input
-					type="number"
+					type="text"
 					name="value"
 					placeholder="Valor"
+					inputMode="numeric"
 					step=".01"
+					pattern="[0-9]+\.[0-9]2|[0-9]+"
 					onChange={(e) => handleFormChange(e)}
 					value={registerDataInput.value}
 					required
 				/>
-				<p>Ex: 10.48</p>
+				<p>Ex: 10 ou 10.48</p>
 				<input
 					type="text"
 					name="description"

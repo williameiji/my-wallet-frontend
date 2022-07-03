@@ -56,15 +56,17 @@ export default function OutputScreen() {
 			<Title>Nova saída</Title>
 			<Forms onSubmit={registerOutput}>
 				<input
-					type="number"
+					type="text"
 					name="value"
 					placeholder="Valor"
+					inputMode="numeric"
 					step=".01"
+					pattern="[0-9]+\.[0-9]2|[0-9]+"
 					onChange={(e) => handleFormChange(e)}
 					value={registerDataOutput.value}
 					required
 				/>
-				<p>Ex: 10.48</p>
+				<p>Ex: 10 ou 10.48</p>
 				<input
 					type="text"
 					name="description"
