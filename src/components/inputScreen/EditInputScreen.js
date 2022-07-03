@@ -69,7 +69,7 @@ export default function EditInputScreen() {
 					value={editDataInput.value}
 					required
 				/>
-				<p>Ex: 10 ou 10.48</p>
+				<p>Ex: 10.48</p>
 				<input
 					type="text"
 					name="description"
