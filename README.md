@@ -9,7 +9,7 @@
 
 A project (for mobile) to help manage your accounts.
 
-Check project running [here](https://projeto9-williameiji.vercel.app)
+Check project running [here](https://my-wallet-frontend-tau.vercel.app)
 
 
 ## Functionalities
